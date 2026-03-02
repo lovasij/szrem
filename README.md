@@ -17,6 +17,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 * Dokumentáld a munkádat a weben!
 ### Adatok
 #### PÁCIENS
+
 | Pid         | név              | cím                          | telefon        |
 |-------------|------------------|------------------------------|----------------|
 | 17402213339 | Kovács Krisztián | Hajdúhadház, Szűk u. 1.      | (66) 329-896   |
@@ -25,6 +26,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 26511123265 | Kocsis Béláné    | Téglás, Március 15. utca 3.  | (52) 384-345   |
 | 14404013214 | Rézbányai Ernő   | Hajdúhadház, Bocskai út 35.  | (66) 325-643   |
 #### VIZSGÁLAT
+
 | Vid | Pid         | Dátum      |
 |-----|-------------|------------|
 | 1   | 17402213339 | 1996.02.11 |
@@ -33,6 +35,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 4   | 26511123265 | 1996.02.11 |
 | 5   | 14404013214 | 1996.02.11 |
 #### BETEGSÉG
+
 | Bnév            |
 |-----------------|
 | grippe          |
@@ -42,6 +45,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | pneumonia       |
 | bronchitis      |
 #### GYÓGYSZER
+
 | Gynév        |
 |--------------|
 | Semicilin    |
@@ -52,6 +56,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | Diflucan     |
 | Calciphedrin |
 #### MIT_KAP
+
 | Bnév             | Gynév        |
 |------------------|--------------|
 | grippe           | Semicilin    |
@@ -61,6 +66,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | pneumonia        | Ceclor       |
 | bronchitis       | Calciphedrin |
 #### MIRE_ÉRZÉKENY
+
 | Pid         | Gynév     |
 |-------------|-----------|
 | 17402213339 | –         |
@@ -70,6 +76,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 14404013214 | –         |
 | 26511123265 | Calciphedrin |
 #### DIAGNÓZIS
+
 | Vid | Dátum      | Bnév             |
 |-----|------------|------------------|
 | 1   | 1996.02.11 | encefaritis      |
