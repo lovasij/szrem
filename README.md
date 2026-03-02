@@ -17,7 +17,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 * Dokumentáld a munkádat a weben!
 ### Adatok
 #### PÁCIENS
-| Pid         | név             | cím                          | telefon        |
+| Pid         | név              | cím                          | telefon        |
 |-------------|------------------|------------------------------|----------------|
 | 17402213339 | Kovács Krisztián | Hajdúhadház, Szűk u. 1.      | (66) 329-896   |
 | 17303313254 | Andrészki Dezső  | Téglás, Kossuth utca 125.    | (52) 421-643   |
