@@ -16,6 +16,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 * Készíts lekérdezéseket az adatbázis tesztelése céljából!
 * Dokumentáld a munkádat a weben!
 ### Adatok
+
 #### PÁCIENS
 
 | Pid         | név              | cím                          | telefon        |
@@ -25,6 +26,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 25602143598 | Kajár Miklósné   | Téglás, Petőfi út 12.        | (52) 342-453   |
 | 26511123265 | Kocsis Béláné    | Téglás, Március 15. utca 3.  | (52) 384-345   |
 | 14404013214 | Rézbányai Ernő   | Hajdúhadház, Bocskai út 35.  | (66) 325-643   |
+
 #### VIZSGÁLAT
 
 | Vid | Pid         | Dátum      |
@@ -34,6 +36,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 3   | 25602143598 | 1996.02.11 |
 | 4   | 26511123265 | 1996.02.11 |
 | 5   | 14404013214 | 1996.02.11 |
+
 #### BETEGSÉG
 
 | Bnév            |
@@ -44,6 +47,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | encephalomylitis|
 | pneumonia       |
 | bronchitis      |
+
 #### GYÓGYSZER
 
 | Gynév        |
@@ -55,6 +59,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | Ceclor       |
 | Diflucan     |
 | Calciphedrin |
+
 #### MIT_KAP
 
 | Bnév             | Gynév        |
@@ -65,6 +70,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | encephalomylitis | Metyl-pred   |
 | pneumonia        | Ceclor       |
 | bronchitis       | Calciphedrin |
+
 #### MIRE_ÉRZÉKENY
 
 | Pid         | Gynév     |
@@ -75,6 +81,7 @@ vizsgálatok időpontjait és felírt gyógyszereket.
 | 26511123265 | Diflucan  |
 | 14404013214 | –         |
 | 26511123265 | Calciphedrin |
+
 #### DIAGNÓZIS
 
 | Vid | Dátum      | Bnév             |
