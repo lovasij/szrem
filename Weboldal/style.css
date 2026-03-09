@@ -1,0 +1,46 @@
+body {
+    background-color: #f5f8fb;
+    padding-top: 10px;
+}
+.navbar-brand span {
+    font-weight: 600;
+}
+.hero {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+}
+.hero-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0d47a1;
+}
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: #455a64;
+}
+.section-title {
+    font-weight: 700;
+    color: #0d47a1;
+    margin-bottom: 1rem;
+}
+.code-block {
+    background-color: #263238;
+    color: #eceff1;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-family: Consolas, monospace;
+    font-size: .9rem;
+    overflow-x: auto;
+}
+footer {
+    background-color: #0d47a1;
+    color: #e3f2fd;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+.table thead {
+    background-color: #e3f2fd;
+}
+.badge-pill {
+    border-radius: 50rem;
+}

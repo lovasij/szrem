@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Háziorvosi Betegnyilvántartó Rendszer – Dokumentáció</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CDN (egyszerűség kedvéért) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navigáció -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#top">
+            <span class="me-2">🩺</span>
+            <span>Betegnyilvántartó Rendszer</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="mainNav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#bevezetes">Főoldal</a></li>
+                <li class="nav-item"><a class="nav-link" href="#er">ER-modell</a></li>
+                <li class="nav-item"><a class="nav-link" href="#relacios">Relációs modell</a></li>
+                <li class="nav-item"><a class="nav-link" href="#sql">Adatbázis SQL</a></li>
+                <li class="nav-item"><a class="nav-link" href="#lekerdezesek">Lekérdezések</a></li>
+                <li class="nav-item"><a class="nav-link" href="#dokumentacio">Dokumentáció</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero szekció -->
+<section id="bevezetes" class="hero">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-md-6">
+                <h1 class="hero-title">Háziorvosi Betegnyilvántartó Rendszer</h1>
+                <p class="hero-subtitle mt-3">
+                    Relációs adatmodell páciensek, vizsgálatok, diagnózisok, betegségek, gyógyszerek és gyógyszerérzékenység
+                    nyilvántartására. Az oldal bemutatja az ER-modellt, a relációs modellt, az SQL kódot és példalekérdezéseket.
+                </p>
+                <div class="mt-3">
+                    <span class="badge bg-primary badge-pill me-2">MySQL</span>
+                    <span class="badge bg-info text-dark badge-pill me-2">phpMyAdmin</span>
+                    <span class="badge bg-success badge-pill">ER-modell</span>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <!-- Illusztratív „kép” helye – itt most csak egy kártya -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Orvosi admin felület – koncepció</h5>
+                        <p class="card-text">
+                            Páciensek, vizsgálatok, diagnózisok és gyógyszerek áttekintése egy modern, letisztult felületen.
+                        </p>
+                        <ul class="list-unstyled text-start small">
+                            <li>• Páciens törzsadatok</li>
+                            <li>• Vizsgálatok időponttal és kóddal</li>
+                            <li>• Diagnózisok több betegségre</li>
+                            <li>• Felírt gyógyszerek és érzékenységek</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ER-modell -->
+<section id="er" class="py-5">
+    <div class="container">
+        <h2 class="section-title">ER-modell</h2>
+        <p>
+            Az adatbázis fő egyedtípusai: <strong>Páciens</strong>, <strong>Vizsgálat</strong>, <strong>Betegség</strong>,
+            <strong>Gyógyszer</strong>, valamint a kapcsolatokat leíró egyedek:
+            <strong>Diagnózis</strong>, <strong>Mit_kap</strong> (betegség–gyógyszer),
+            <strong>Mire_érzékeny</strong> (páciens–gyógyszer).
+        </p>
+
+        <div class="row g-4 mt-3">
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Egyedek és attribútumok</h5>
+                        <ul class="small">
+                            <li><strong>Páciens</strong>(Pid, név, cím, telefon)</li>
+                            <li><strong>Vizsgálat</strong>(Vid, Pid, dátum)</li>
+                            <li><strong>Betegség</strong>(Bnév)</li>
+                            <li><strong>Gyógyszer</strong>(Gynév)</li>
+                            <li><strong>Mit_kap</strong>(Bnév, Gynév)</li>
+                            <li><strong>Mire_érzékeny</strong>(Pid, Gynév)</li>
+                            <li><strong>Diagnózis</strong>(Vid, dátum, Bnév)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Kapcsolatok</h5>
+                        <ul class="small">
+                            <li><strong>Páciens – Vizsgálat</strong>: 1–N (egy páciensnek több vizsgálata lehet)</li>
+                            <li><strong>Vizsgálat – Betegség</strong>: N–N (egy vizsgálaton több betegség diagnosztizálható)</li>
+                            <li><strong>Betegség – Gyógyszer</strong>: N–N (egy betegségre több gyógyszer is felírható)</li>
+                            <li><strong>Páciens – Gyógyszer</strong>: N–N (egy páciens több gyógyszerre is lehet érzékeny)</li>
+                            <li><strong>Vizsgálat</strong> egyértelmű: (Vid) vagy (dátum + vizsgálat kódja)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ER-diagram helye (leíró jelleggel) -->
+        <div class="mt-4">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    ER-diagram (szövegesen leírva – vizuális ábrához pl. draw.io használható)
+                </div>
+                <div class="card-body small">
+                    <p>
+                        Páciens (1) ────&lt; Vizsgálat &gt;──── (N) Diagnózis (N) ──── Betegség (1)
+                    </p>
+                    <p>
+                        Betegség (N) ────&lt; Mit_kap &gt;──── (N) Gyógyszer
+                    </p>
+                    <p>
+                        Páciens (N) ────&lt; Mire_érzékeny &gt;──── (N) Gyógyszer
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Relációs modell -->
+<section id="relacios" class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title">Relációs modell</h2>
+        <p>Az ER-modellből származtatott relációk, elsődleges és idegen kulcsokkal.</p>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered align-middle">
+                <thead>
+                <tr>
+                    <th>Tábla</th>
+                    <th>Attribútumok</th>
+                    <th>Elsődleges kulcs</th>
+                    <th>Idegen kulcsok</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Paciens</td>
+                    <td>Pid, nev, cim, telefon</td>
+                    <td>Pid</td>
+                    <td>–</td>
+                </tr>
+                <tr>
+                    <td>Vizsgalat</td>
+                    <td>Vid, Pid, datum</td>
+                    <td>Vid</td>
+                    <td>Pid → Paciens(Pid)</td>
+                </tr>
+                <tr>
+                    <td>Betegseg</td>
+                    <td>Bnev</td>
+                    <td>Bnev</td>
+                    <td>–</td>
+                </tr>
+                <tr>
+                    <td>Gyogyszer</td>
+                    <td>Gynev</td>
+                    <td>Gynev</td>
+                    <td>–</td>
+                </tr>
+                <tr>
+                    <td>Mit_kap</td>
+                    <td>Bnev, Gynev</td>
+                    <td>(Bnev, Gynev)</td>
+                    <td>Bnev → Betegseg(Bnev), Gynev → Gyogyszer(Gynev)</td>
+                </tr>
+                <tr>
+                    <td>Mire_erzekeny</td>
+                    <td>Pid, Gynev</td>
+                    <td>(Pid, Gynev)</td>
+                    <td>Pid → Paciens(Pid), Gynev → Gyogyszer(Gynev)</td>
+                </tr>
+                <tr>
+                    <td>Diagnózis</td>
+                    <td>Vid, datum, Bnev</td>
+                    <td>(Vid, Bnev)</td>
+                    <td>Vid → Vizsgalat(Vid), Bnev → Betegseg(Bnev)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- SQL kód – adatbázis létrehozása -->
+<section id="sql" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Adatbázis létrehozása – SQL (MySQL / phpMyAdmin)</h2>
+        <p>Az alábbi kód bemásolható phpMyAdmin-ba (SQL fül), és futtatva létrehozza a táblákat és a mintaadatokat.</p>
+
+        <div class="code-block mt-3">
+<pre>
+CREATE DATABASE IF NOT EXISTS haziorvosi
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_hungarian_ci;
+USE haziorvosi;
+
+CREATE TABLE Paciens (
+  Pid   BIGINT PRIMARY KEY,
+  nev   VARCHAR(100) NOT NULL,
+  cim   VARCHAR(200),
+  telefon VARCHAR(50)
+);
+
+CREATE TABLE Betegseg (
+  Bnev VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Gyogyszer (
+  Gynev VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Vizsgalat (
+  Vid   INT PRIMARY KEY,
+  Pid   BIGINT NOT NULL,
+  datum DATE NOT NULL,
+  CONSTRAINT fk_vizsgalat_paciens
+    FOREIGN KEY (Pid) REFERENCES Paciens(Pid)
+);
+
+CREATE TABLE Mit_kap (
+  Bnev VARCHAR(100) NOT NULL,
+  Gynev VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Bnev, Gynev),
+  CONSTRAINT fk_mitkap_betegseg
+    FOREIGN KEY (Bnev) REFERENCES Betegseg(Bnev),
+  CONSTRAINT fk_mitkap_gyogyszer
+    FOREIGN KEY (Gynev) REFERENCES Gyogyszer(Gynev)
+);
+
+CREATE TABLE Mire_erzekeny (
+  Pid BIGINT NOT NULL,
+  Gynev VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Pid, Gynev),
+  CONSTRAINT fk_erz_paciens
+    FOREIGN KEY (Pid) REFERENCES Paciens(Pid),
+  CONSTRAINT fk_erz_gyogyszer
+    FOREIGN KEY (Gynev) REFERENCES Gyogyszer(Gynev)
+);
+
+CREATE TABLE Diagnózis (
+  Vid   INT NOT NULL,
+  datum DATE NOT NULL,
+  Bnev  VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Vid, Bnev),
+  CONSTRAINT fk_diag_vizsgalat
+    FOREIGN KEY (Vid) REFERENCES Vizsgalat(Vid),
+  CONSTRAINT fk_diag_betegseg
+    FOREIGN KEY (Bnev) REFERENCES Betegseg(Bnev)
+);
+
+-- Mintaadatok
+INSERT INTO Paciens (Pid, nev, cim, telefon) VALUES
+(17402213339, 'Kovács Krisztián', 'Hajdúhadház, Szűk u. 1.', '(66) 329-896'),
+(17303313254, 'Andrészki Dezső', 'Téglás, Kossuth utca 125.', '(52) 421-643'),
+(25602143598, 'Kajár Miklósné', 'Téglás, Petőfi út 12.', '(52) 342-453'),
+(26511123265, 'Kocsis Béláné', 'Téglás, Március 15. utca 3.', '(52) 384-345'),
+(14404013214, 'Rézbányai Ernő', 'Hajdúhadház, Bocskai út 35.', '(66) 325-643');
+
+INSERT INTO Vizsgalat (Vid, Pid, datum) VALUES
+(1, 17402213339, '1996-02-11'),
+(2, 17303313254, '1996-02-11'),
+(3, 25602143598, '1996-02-11'),
+(4, 26511123265, '1996-02-11'),
+(5, 14404013214, '1996-02-11');
+
+INSERT INTO Betegseg (Bnev) VALUES
+('grippe'),
+('hepatitis'),
+('encefaritis'),
+('encephalomylitis'),
+('pneumonia'),
+('bronchitis');
+
+INSERT INTO Gyogyszer (Gynev) VALUES
+('Semicilin'),
+('Prednisolon'),
+('Medrol'),
+('Metyl-pred'),
+('Ceclor'),
+('Diflucan'),
+('Calciphedrin');
+
+INSERT INTO Mit_kap (Bnev, Gynev) VALUES
+('grippe', 'Semicilin'),
+('hepatitis', 'Prednisolon'),
+('encefaritis', 'Medrol'),
+('encephalomylitis', 'Metyl-pred'),
+('pneumonia', 'Ceclor'),
+('bronchitis', 'Calciphedrin');
+
+INSERT INTO Mire_erzekeny (Pid, Gynev) VALUES
+(26511123265, 'Diflucan'),
+(26511123265, 'Calciphedrin');
+
+INSERT INTO Diagnózis (Vid, datum, Bnev) VALUES
+(1, '1996-02-11', 'encefaritis'),
+(1, '1996-02-11', 'encephalomylitis'),
+(2, '1996-02-11', 'grippe'),
+(3, '1996-02-11', 'hepatitis'),
+(4, '1996-02-11', 'pneumonia'),
+(5, '1996-02-11', 'grippe');
+</pre>
+        </div>
+    </div>
+</section>
+
+<!-- Lekérdezések -->
+<section id="lekerdezesek" class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title">Tesztlekérdezések</h2>
+        <p>Néhány példa lekérdezés az adatbázis működésének ellenőrzésére.</p>
+
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">1. Páciensek vizsgálatai és diagnózisai</h5>
+                        <p class="small">Melyik páciensnek milyen betegséget diagnosztizáltak egy vizsgálaton?</p>
+                        <div class="code-block">
+<pre>
+SELECT p.nev, v.Vid, v.datum, d.Bnev
+FROM Paciens p
+JOIN Vizsgalat v ON p.Pid = v.Pid
+JOIN Diagnózis d ON v.Vid = d.Vid
+ORDER BY v.datum, p.nev;
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">2. Betegségre felírt gyógyszerek</h5>
+                        <p class="small">Milyen gyógyszereket kap egy adott betegség?</p>
+                        <div class="code-block">
+<pre>
+SELECT m.Bnev AS Betegseg, m.Gynev AS Gyogyszer
+FROM Mit_kap m
+ORDER BY m.Bnev, m.Gynev;
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">3. Gyógyszerérzékeny páciensek</h5>
+                        <p class="small">Kik érzékenyek valamely gyógyszerre?</p>
+                        <div class="code-block">
+<pre>
+SELECT p.nev, me.Gynev
+FROM Mire_erzekeny me
+JOIN Paciens p ON me.Pid = p.Pid
+ORDER BY p.nev;
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">4. Egy adott napon történt vizsgálatok</h5>
+                        <p class="small">1996-02-11-i vizsgálatok listája páciensekkel.</p>
+                        <div class="code-block">
+<pre>
+SELECT v.Vid, v.datum, p.nev
+FROM Vizsgalat v
+JOIN Paciens p ON v.Pid = p.Pid
+WHERE v.datum = '1996-02-11'
+ORDER BY v.Vid;
+</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dokumentáció -->
+<section id="dokumentacio" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Projekt dokumentáció – röviden</h2>
+        <p>
+            Ez a weboldal egy háziorvosi betegnyilvántartó rendszer relációs adatmodelljét mutatja be. A cél az volt, hogy
+            a páciensek személyes adatai, vizsgálatai, diagnózisai, a betegségek, a gyógyszerek, valamint a gyógyszerérzékenység
+            egy konzisztens, normalizált adatbázisban legyenek tárolva.
+        </p>
+        <ul>
+            <li><strong>Adatmodellezés:</strong> egyedek, attribútumok, kapcsolatok azonosítása, ER-modell készítése.</li>
+            <li><strong>Relációs modell:</strong> táblák, kulcsok, idegen kulcsok meghatározása.</li>
+            <li><strong>Implementáció:</strong> MySQL adatbázis létrehozása phpMyAdmin segítségével.</li>
+            <li><strong>Tesztelés:</strong> mintaadatok betöltése, lekérdezések futtatása.</li>
+            <li><strong>Dokumentáció:</strong> a folyamat és a struktúra bemutatása ezen a weboldalon.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Lábléc -->
+<footer>
+    <div class="container text-center small">
+        Háziorvosi Betegnyilvántartó Rendszer – Oktatási célú példa • HTML + Bootstrap • MySQL / phpMyAdmin
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
